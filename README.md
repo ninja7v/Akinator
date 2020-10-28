@@ -1,2 +1,2 @@
 # Akinator
- Akinator in Pascal
+Find your character !
