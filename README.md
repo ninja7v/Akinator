@@ -2,38 +2,38 @@
 
 Akinator coded in Pascal by Luc PREVOST.
 
-![snake_play](https://user-images.githubusercontent.com/52052772/141104260-b8f67b21-0dbb-449d-9ad5-0b7d5116273c.png)
+![akinator_play](https://user-images.githubusercontent.com/52052772/141130701-61c0ddff-0e6d-40f6-9885-43e914cb25ae.png)
 
 📃 INSTRUCTIONS
 ============
 ## 🚀Execution
-Snake uses the folowing Pascal units:
+Akinator uses the folowing Pascal units:
 - [Crt](https://wiki.freepascal.org/Crt)
-- [Dos](https://www.freepascal.org/docs-html/rtl/dos/index.html)
 - [Keyboard](https://www.freepascal.org/docs-html/rtl/keyboard/index.html)
 - [Sysutils](https://www.freepascal.org/docs-html/rtl/sysutils/index.html)
 
 To execute it, compile the "snake.pas" file and run it. After launching the program, a terminal windows pops up.
 
 ## ⚙️Menu
-![snake_menu](https://user-images.githubusercontent.com/52052772/141106612-e06bef9a-58d9-4ce5-b823-2e0de5b141e7.png)
+![akinator_menu](https://user-images.githubusercontent.com/52052772/141129466-4dc68027-2a09-41de-9a8e-82a7bd42b9ea.png)
 
 Everything happens in the terminal. Select the option you want using ↑ and ↓ arrows (or '8' and '2' keys if the VERR NUM buton is desactivated), then press SPACE BAR to validate. Any other key won't do anything.
 
 ## 📏 Rules
-![snake_rules](https://user-images.githubusercontent.com/52052772/141109745-06cf3edf-71a6-4b50-b5e3-e2e59b17b1b4.png)
+![akinator_rules](https://user-images.githubusercontent.com/52052772/141129763-280c5060-351e-47ff-b2fd-1e60e83e89d5.png)
 
 ## 🎮 Game
-![snake_game](https://user-images.githubusercontent.com/52052772/141110565-0b0d42c4-b4dc-48de-970d-0288d5c5246d.png)
+![akinator_game](https://user-images.githubusercontent.com/52052772/141130235-5a5f948b-43e0-4184-a26a-f768fdf9cfe2.png)
 
-The first step is choosing the level. The higher it is, the higher the number of wall. Theses last are represented in red and are placed randomly on the map and are fixed. The second step is chooosing the color of the snake. The 2 options are White and blue. Finaly, commands to play are ↑, ↓, →, ← arrrows. Resizing the window may errase the grid. After loosing, the 2 options are comeback to the menu or exit the program.
+The player have to answer every question with the 3 possibilities: yes, no, I don't know. At the end, Akinator give his answer.
 
-## 🥇 Scores
-Scores are saved in the "score_snake.txt" file. If this file doesn't exist, it is created. It is possible to rest scores in the score option.
+## 🗃️ Data base
+![akinator_add](https://user-images.githubusercontent.com/52052772/141131399-4b01adba-2c72-43d5-96b3-8e953cde1847.png)
 
-Now it is your turn to break records !
+Characters are saved in the "data_akinator.txt" file. If this file doesn't exist, it is created. It is possible to add characters modfing the file or at the end of a game.
 
-Thank you for playing my Snake 🙂
+Now it is your turn to make Akinator thinking !
 
-Just grow !
+Thank you for playing my Akinator 🙂
 
+Just guess !
