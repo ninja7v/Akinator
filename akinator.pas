@@ -1,81 +1,82 @@
+// Akinator coded in Pascal by Luc PREVOST, 2017
 program akinator;
 
-uses crt {couleur,goto}, keyboard {lire une touche}, sysutils {fichier};
+uses crt {color,goto}, keyboard {read input}, sysutils {file};
 
 const questionmax=10;
 	persomax=10;
 type tab1=array [1..persomax,1..questionmax] of string;
 	tab2=array [1..questionmax] of string;
 
-//initialisation file
+// Initialisation file
 procedure initialisationfichier(var tabd:tab1; var nbrquestions,nbrpersonnages:integer);
 
 var donnees:file of tab1;
 	numperso:integer;
 
 begin
-	if not(FileExists('fichierdonnees')) then
+	if not(FileExists('data_akinator.txt')) then
 	Begin
-		assign(donnees, 'fichierdonnees');
+		assign(donnees, 'data_akinator.txt');
 		rewrite(donnees);
-		tabd[1,1]:='                           ';
+		tabd[1,1]:='                         ';
 		{pour les questions}
-		tabd[1,2]:='Est-ce une femme ?         ';
-		tabd[1,3]:='Est-ce un prof ?           ';
-		tabd[1,4]:='A-t-il les cheveux longs ? ';
-		tabd[1,5]:='Cours-t-il dimanche ?      ';
+		tabd[1,2]:='Is it a wooman ?        ';
+		tabd[1,3]:='Is it a teacher ?       ';
+		tabd[1,4]:='Does it has long hair ? ';
+		tabd[1,5]:='Does it like running ?  ';
 		nbrquestions:=4;
 		{pour les personnages}
 		numperso:=2;
-		tabd[numperso,1]:='Un prof d info';
-		tabd[numperso,2]:='non';
-		tabd[numperso,3]:='oui';
-		tabd[numperso,4]:='non';
-		tabd[numperso,5]:='non';
+		tabd[numperso,1]:='Lisa';
+		tabd[numperso,2]:='yes';
+		tabd[numperso,3]:='yes';
+		tabd[numperso,4]:='no';
+		tabd[numperso,5]:='no';
 		numperso:=3;
 		tabd[numperso,1]:='Jason';
-		tabd[numperso,2]:='non';
-		tabd[numperso,3]:='non';
-		tabd[numperso,4]:='oui';
-		tabd[numperso,5]:='non';
+		tabd[numperso,2]:='no';
+		tabd[numperso,3]:='no';
+		tabd[numperso,4]:='yes';
+		tabd[numperso,5]:='no';
 		numperso:=4;
 		tabd[numperso,1]:='Yassine';
-		tabd[numperso,2]:='non';
-		tabd[numperso,3]:='non';
-		tabd[numperso,4]:='non';
-		tabd[numperso,5]:='non';
+		tabd[numperso,2]:='no';
+		tabd[numperso,3]:='no';
+		tabd[numperso,4]:='no';
+		tabd[numperso,5]:='no';
 		numperso:=5;
 		tabd[numperso,1]:='Claire';
-		tabd[numperso,2]:='oui';
-		tabd[numperso,3]:='oui';
-		tabd[numperso,4]:='oui';
-		tabd[numperso,5]:='oui';
+		tabd[numperso,2]:='yes';
+		tabd[numperso,3]:='yes';
+		tabd[numperso,4]:='yes';
+		tabd[numperso,5]:='yes';
 		numperso:=6;
 		tabd[numperso,1]:='Luc';
-		tabd[numperso,2]:='non';
-		tabd[numperso,3]:='non';
-		tabd[numperso,4]:='non';
-		tabd[numperso,5]:='oui';
+		tabd[numperso,2]:='no';
+		tabd[numperso,3]:='no';
+		tabd[numperso,4]:='no';
+		tabd[numperso,5]:='yes';
 		nbrpersonnages:=numperso-1;
 		write(donnees,tabd);
 		close(donnees);
 	end
 	else
-	begin{pour nbrpersonnages}
-		assign(donnees, 'fichierdonnees');
+	begin{for nbrpersonnages}
+		assign(donnees, 'data_akinator.txt');
 		reset(donnees);
 		read(donnees,tabd);
 		numperso:=1;
 		repeat
 			numperso:=numperso+1;
-		until (tabd[numperso,2]<>'oui') and (tabd[numperso,2]<>'non');
+		until (tabd[numperso,2]<>'yes') and (tabd[numperso,2]<>'no');
 		nbrpersonnages:=numperso-2;
 		close(donnees);
-		nbrquestions:=4;{pour nbrquestion}
+		nbrquestions:=4;{for nbrquestion}
 	end;
 end;
 
-//game
+// Game iteration
 procedure tourdejeu(nbrquestions:integer; var tabr:tab2);
 
 var tabd:tab1;
@@ -88,36 +89,36 @@ begin
 	repeat
 		x:=random(nbrquestions+1);
 	until tabr[x]='0';
-	assign(donnees, 'fichierdonnees');
+	assign(donnees, 'data_akinator.txt');
 	reset(donnees);
 	read(donnees, tabd);
 	writeln(tabd[1,x+1]);
 	close(donnees);
 	writeln('');
-	writeln('OUI            [ ]');
-	writeln('NON            [ ]');
-	writeln('Je ne sais pas [ ]');
+	writeln('Yes          [ ]');
+	writeln('No           [ ]');
+	writeln('I don t know [ ]');
 	writeln('');
-	writeln('Entrer ESPACE pour selectioner.');
+	writeln('*Type SPACE BAR to select*');
 	pos:=wherey;
-	gotoxy(17,pos-5);
+	gotoxy(15,pos-5);
 	InitKeyBoard();
 	repeat
 		K:=GetKeyEvent();
 		K:=TranslateKeyEvent(K);
 		if (KeyEventToString(K) = 'Up') and (wherey>pos-5) then
-			GotoXY(17,wherey-1);
+			GotoXY(15,wherey-1);
 		if (KeyEventToString(K) = 'Down') and (wherey<pos-3)then
-			GotoXY(17,wherey+1);
+			GotoXY(15,wherey+1);
 	until KeyEventToString(K) = ' ';
 	c:=wherey;
 	DoneKeyBoard();
-	if c=pos-5 then tabr[x]:='oui';
-	if c=pos-4 then tabr[x]:='non';
+	if c=pos-5 then tabr[x]:='yes';
+	if c=pos-4 then tabr[x]:='no';
 	if c=pos-3 then tabr[x]:='nsp';
 end;
 
-//research character
+// Research character
 procedure recherchepersonnage(tabr:tab2; nbrquestions:integer; nbrpersonnages:integer; var victoire:boolean; var retour:integer);
 
 var i,j,c,pos:integer;
@@ -128,7 +129,7 @@ var i,j,c,pos:integer;
 
 begin
 	gotoxy(1,9);
-	assign(donnees, 'fichierdonnees');
+	assign(donnees, 'data_akinator.txt');
 	reset(donnees);
 	read(donnees, tabd);
 	i:=1;
@@ -144,22 +145,22 @@ begin
 	if victoire=true then
 	begin
 		personnage:=tabd[i,1];
-		writeln('Je pensse a ... ',personnage,' !');
+		writeln('I think at ... ',personnage,' !');
 		writeln('');
-		writeln('Menu   [ ]');
-		writeln('Quiter [ ]');
+		writeln('Menu [ ]');
+		writeln('Exit [ ]');
 		writeln('');
-		writeln('Touche ESPACE pour selectioner.');
+		writeln('*Type SPACE BAR to select*');
 		pos:=wherey;
-		gotoxy(9,pos-4);
+		gotoxy(7,pos-4);
 		InitKeyBoard();
 		repeat
 			K:=GetKeyEvent();
 			K:=TranslateKeyEvent(K);
 			if (KeyEventToString(K) = 'Up') and (wherey>pos-4) then
-				GotoXY(9,wherey-1);
+				GotoXY(7,wherey-1);
 			if (KeyEventToString(K) = 'Down') and (wherey<pos-3)then
-				GotoXY(9,wherey+1);
+				GotoXY(7,wherey+1);
 		until (KeyEventToString(K) = ' ');
 		c:=wherey;
 		DoneKeyBoard();
@@ -168,23 +169,23 @@ begin
 	end
 	else 
 	begin
-		writeln('Je ne trouve pas ton personnage.');
+		writeln('I don t find your character ...');
 		writeln('');
-		writeln('Je veux le rajouter [ ]');
-		writeln('Menu                [ ]');
-		writeln('Quiter              [ ]');
+		writeln('Add wharacter [ ]');
+		writeln('Menu          [ ]');
+		writeln('Exit          [ ]');
 		writeln('');
-		writeln('Touche ESPACE pour selectioner.');
+		writeln('*Type SPACE BAR to select*');
 		pos:=wherey;
-		gotoxy(22,pos-5);
+		gotoxy(16,pos-5);
 		InitKeyBoard();
 		repeat
 			K:=GetKeyEvent();
 			K:=TranslateKeyEvent(K);
 			if (KeyEventToString(K) = 'Up') and (wherey>pos-5) then
-				GotoXY(22,wherey-1);
+				GotoXY(16,wherey-1);
 			if (KeyEventToString(K) = 'Down') and (wherey<pos-3)then
-				GotoXY(22,wherey+1);
+				GotoXY(16,wherey+1);
 		until KeyEventToString(K) = ' ';
 		c:=wherey;
 		DoneKeyBoard();
@@ -193,11 +194,11 @@ begin
 		begin
 			gotoxy(1,16);
 			nbrpersonnages:=nbrpersonnages+2;
-			write('quel est son nom ? ');
+			write('What is his name ? ');
 			repeat
 				readln(personnage);
 			until personnage<>'';
-			assign(donnees, 'fichierdonnees');
+			assign(donnees, 'data_akinator.txt');
 			reset(donnees);
 			read(donnees,tabd);
 			rewrite(donnees);
@@ -212,7 +213,7 @@ begin
 	end
 end;
 
-//display data table
+// Display data table
 procedure affichagetabd(tabd:tab1;nbrpersonnages,nbrquestions:integer);
 
 var i,j:integer;
@@ -229,7 +230,7 @@ begin
 		end;
 end;
 
-//rules
+// Rules
 procedure regles (var retour:integer);
 
 var pos,c:integer;
@@ -237,21 +238,22 @@ var pos,c:integer;
 
 begin
 	clrscr;
-	writeln('Le but est de faire trouver un personnage de l INSA a Akinator.');
+	writeln('The purpose it to make Akinator find your character answering questions.');
+	writeln('You can edit them in the data base.');
 	writeln('');
-	writeln('Menu   [ ]');
-	writeln('Quiter [ ]');
+	writeln('Menu [ ]');
+	writeln('Exit [ ]');
 	writeln('');
-	writeln('Touche ESPACE pour selectioner.');
+	writeln('*Type SPACE BAR to select*');
 	pos:=wherey;
-	gotoxy(9,pos-4);
+	gotoxy(7,pos-4);
 	c:=1;
 	InitKeyBoard();
 	repeat
 		K:=GetKeyEvent();
 		K:=TranslateKeyEvent(K);
-		if (KeyEventToString(K) = 'Up') and (wherey>pos-4) then	GotoXY(9,wherey-1);
-		if (KeyEventToString(K) = 'Down') and (wherey<pos-3) then GotoXY(9,wherey+1);
+		if (KeyEventToString(K) = 'Up') and (wherey>pos-4) then	GotoXY(7,wherey-1);
+		if (KeyEventToString(K) = 'Down') and (wherey<pos-3) then GotoXY(7,wherey+1);
 		
 	until KeyEventToString(K) = ' ';
 	c:=wherey;
@@ -260,7 +262,7 @@ begin
 	if c=pos-3 then retour:=0;
 end;
 
-//menu
+// Menu
 procedure menu(var gojeu,gobdd,goregles:boolean);
 
 var c:integer;
@@ -271,22 +273,22 @@ Begin
 	gojeu:=false;
 	gobdd:=false;
 	goregles:=false;
-	writeln('Aquinator par NINJA7V');
+	writeln('Akinator by Luc PREVOST');
 	writeln('');
-	writeln('Jouer          [ ]');
-	writeln('base de donnee [ ]');
-	writeln('Regles         [ ]');
+	writeln('Play      [ ]');
+	writeln('Data base [ ]');
+	writeln('Rules     [ ]');
 	writeln('');
-	writeln('Touche ESPACE pour selectioner.');
-	gotoxy(17,3);
+	writeln('*Type SPACE BAR to select*');
+	gotoxy(12,3);
 	
 	repeat
 		K:=GetKeyEvent();
 		K:=TranslateKeyEvent(K);
 		if (KeyEventToString(K) = 'Up') and (wherey>3) then
-			GotoXY(17,wherey-1);
+			GotoXY(12,wherey-1);
 		if (KeyEventToString(K) = 'Down') and (wherey<5)then
-			GotoXY(17,wherey+1);
+			GotoXY(12,wherey+1);
 		c:=wherey;
 	until KeyEventToString(K) = ' ';
 	
@@ -298,7 +300,7 @@ Begin
 	end;
 End;
 
-//data base
+// Data base
 procedure bdd(var retour:integer);
 
 var tabd:tab1;
@@ -312,7 +314,7 @@ begin
 	writeln('Menu [ ]');
 	writeln('Exit [ ]');
 	writeln('');
-	writeln('Touche ESPACE pour selectioner.');
+	writeln('*Type SPACE BAR to select*');
 	pos:=wherey;
 	gotoxy(7,pos-4);
 	InitKeyBoard();
@@ -331,7 +333,7 @@ begin
 	if c=pos-3 then retour:=0;
 end;
 
-//game
+// Game
 procedure jeu(var retour:integer);
 
 var victoire:boolean;
@@ -347,7 +349,7 @@ begin
 	recherchepersonnage(tabr,nbrquestions,nbrpersonnages,victoire,retour);
 end;
 
-// maim program
+// Main
 var gojeu,gobdd,goregles:boolean;
 	retour:integer;
 
